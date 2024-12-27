@@ -1,48 +1,31 @@
-import networkx as nx
-import matplotlib.pyplot as plt
+class Queue:
+   def __init__(self):
+       self.items = []
 
+   def is_empty(self):
+       return self.items == []
 
-class Graph:
-    def __init__(self):
-        self.graph = {}
+   def enqueue(self, item):
+       self.items.insert(0, item)
 
-    def add_edge(self, u, v):
-        # Добавление ребра в граф
-        if u not in self.graph:
-            self.graph[u] = []
-        self.graph[u].append(v)
+   def dequeue(self):
+       return self.items.pop()
 
-    def print_graph(self):
-        # Вывод смежностей для каждой вершины
-        for node in self.graph:
-            print(node, "->", " -> ".join(map(str, self.graph[node])))
+   def size(self):
+       return len(self.items)
 
-    def draw_graph(self):
-        # Визуализация графа с использованием NetworkX
-        G = nx.DiGraph()  # Направленный граф
-        for node in self.graph:
-            for neighbor in self.graph[node]:
-                G.add_edge(node, neighbor)
+queue = Queue()
 
-        # Отображение графа
-        nx.draw(G, with_labels=True, node_size=2000, node_color="skyblue", font_size=12)
-        plt.show()
+print(queue.is_empty())
 
+queue.enqueue("действие 1")
+queue.enqueue("действие 2")
+queue.enqueue("действие 3")
+queue.enqueue("действие 4")
 
-# Пример использования:
-g = Graph()
+# ["действие 4", "действие 3", "действие 2", "действие 1"]
 
-# Добавление рёбер
-g.add_edge(0, 1)
-g.add_edge(0, 4)
-g.add_edge(1, 2)
-g.add_edge(1, 3)
-g.add_edge(1, 4)
-g.add_edge(2, 3)
-g.add_edge(3, 4)
-
-# Печать графа
-g.print_graph()
-
-# Визуализация графа
-g.draw_graph()
+print(queue.is_empty())
+print(queue.size())
+print(queue.dequeue())
+print(queue.size())
